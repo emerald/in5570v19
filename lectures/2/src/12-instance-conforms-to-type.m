@@ -6,7 +6,7 @@ const RandClass <- class RandClass
   export op next -> [retval : Integer]
     retval <- 43
   end next
-end rand
+end RandClass
 
 const main <- object main
   initially
