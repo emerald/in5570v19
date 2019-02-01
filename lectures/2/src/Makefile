@@ -9,4 +9,7 @@ dockerfile := $(current_dir)../../../docker/Makefile
 interact:
 	@make -s -f $(dockerfile) interact
 
-.PHONY: interact
+runall:
+	for f in *.m; do ec "$${f}"; emx "$${f%.*}.x" ; done
+
+.PHONY: interact runall

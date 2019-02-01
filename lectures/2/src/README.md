@@ -21,3 +21,11 @@ this directory:
 docker@...$ ec file.m
 docker@...$ emx file.x
 ```
+
+The [Makefile](Makefile) also has a target for compiling running all
+the programs (in `*`-globbing-order!). It only works from within the
+docker instance, or if you have a local installation of Emerald:
+
+```
+docker@...$ make runall
+```
