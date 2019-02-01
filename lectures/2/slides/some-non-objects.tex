@@ -1,0 +1,33 @@
+\begin{frame}[fragile]
+
+\frametitle{Some Non-Objects: Trivial Emerald Programs}
+
+\begin{itemize}
+
+\item An Emerald program is a list of constant declarations
+
+\item Each bearing a name, an expression, and optionally, a type
+
+\item The following (trivial) programs produce no output
+
+\end{itemize}
+
+With type inference:
+
+\begin{lstlisting}
+const a <- 4
+const b <- true
+const c <- 'x'
+const d <- "Hello, World!\n"
+\end{lstlisting}
+
+With type annotations:
+
+\begin{lstlisting}
+const a : Integer <- 4
+const b : Boolean <- true
+const c : Char <- 'x'
+const d : String <- "Hello, World!\n"
+\end{lstlisting}
+
+\end{frame}

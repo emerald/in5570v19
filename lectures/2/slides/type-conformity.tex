@@ -1,0 +1,231 @@
+\begin{frame}[fragile]
+
+\frametitle{Type Conformity Is Everywhere}
+
+\begin{center}
+
+When using an object where a particular type is expected,\\ the object
+type must \textbf{\underline{conform to}} the expected type
+
+\end{center}
+
+\begin{itemize}
+
+\item Conformity is checked at compile time; no runtime costs!
+
+\end{itemize}
+
+\begin{lstlisting}
+const RandType <- typeobject RandType
+  op next -> [seed : Integer]
+end RandType
+
+const RandClass <- class RandClass
+  export op next -> [retval : Integer]
+    retval <- 42
+  end next
+end rand
+
+const main <- object main
+  initially
+    const r : RandType <- RandClass.create
+  end initially
+end main
+\end{lstlisting}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+
+\frametitle{Type Conformity: Definition}
+
+\newcommand{\emlbr}{\ensuremath{\text{\texttt{[}}}}
+\newcommand{\emrbr}{\ensuremath{\text{\texttt{]}}}}
+\newcommand{\emrarr}{\ensuremath{\text{\texttt{->}}}}
+\newcommand{\emsig}[3]{\ensuremath{#1\emlbr {#2}\emrbr\emrarr\emlbr {#3}\emrbr}}
+
+A type $S$ conforms to a type $T$ iff for each operation
+
+$$\emsig{o}{p^T_1, p^T_2, \ldots p^T_n}{r^T_1, r^T_2, \ldots,
+r^T_m}\quad \text{in}\ T$$
+
+there is a corresponding operation\footnote{Having the same name,
+number of formal parameters, and results.}
+
+$$\emsig{o}{p^S_1, p^S_2, \ldots p^S_n}{r^S_1, r^S_2, \ldots,
+r^S_m}\quad \text{in}\ S$$
+
+where
+
+\begin{enumerate}
+
+\item $p^T_i$ conforms to $p^S_i$, for all $i \in 1, 2, \ldots n$, and
+
+\item $r^S_i$ conforms to $r^T_i$, for all $i \in 1, 2, \ldots n$
+
+\end{enumerate}
+
+\vspace{\fill}
+
+\begin{center}
+
+NB! Formal parameters conform one way, while results the other.
+
+\end{center}
+
+\end{frame}
+
+
+\begin{frame}
+
+\frametitle{Some Special Cases: Any and None}
+
+\begin{center}
+
+\lstinline{Any} and \lstinline{None} are special built-in types
+
+\lstinline{None} is the type of the keyword (expression) \lstinline{nil}
+
+\end{center}
+
+\vspace{\fill}
+
+They have the following interesting properties:
+
+\begin{enumerate}
+
+\item Everything conforms to \lstinline{Any}
+
+\item \lstinline{None} conforms to anything
+
+\item Nothing conforms to \lstinline{None}
+
+\end{enumerate}
+
+Notably, \lstinline{nil} conforms to \lstinline{Any}, and anything at all
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+
+\frametitle{Type Conformity: Example (1/3)}
+
+Consider the types of some waste bins, which we can pick at:
+
+\begin{center}
+\begin{minipage}{0.4\textwidth}
+\begin{lstlisting}
+typeobject AnyBin
+  op Pick -> [Any]
+end AnyBin
+\end{lstlisting}
+\end{minipage}\quad%
+\begin{minipage}{0.4\textwidth}
+\begin{lstlisting}
+typeobject PaperBin
+  op Pick -> [Paper]
+end PaperBin
+\end{lstlisting}
+\end{minipage}
+\end{center}
+
+Now, imagine being a waste picker\footnote{Waste-picking is an
+admirable profession for an autonomous drone}:
+
+\begin{itemize}
+
+\item If you accept any trash (i.e., \texttt{AnyBin}s), then you are
+also willing accept specialized trash (e.g., \texttt{PaperBin}s).
+
+\item If you only accept specialized trash (e.g., \texttt{PaperBin}s),
+then you are not willing to accept any trash (i.e., \texttt{AnyBin}s).
+
+\end{itemize}
+
+Hence, \texttt{PaperBin} conforms to \texttt{AnyBin}, but not
+vice-versa.
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+
+\frametitle{Type Conformity: Example (2/3)}
+
+Now, instead consider bins we can throw something into:
+
+\begin{center}
+\begin{minipage}{0.4\textwidth}
+\begin{lstlisting}
+typeobject AnyBin
+  op Throw[Any]
+end AnyBin
+\end{lstlisting}
+\end{minipage}\quad%
+\begin{minipage}{0.4\textwidth}
+\begin{lstlisting}
+typeobject PaperBin
+  op Throw[Paper]
+end PaperBin
+\end{lstlisting}
+\end{minipage}
+\end{center}
+
+\begin{itemize}
+
+\item A bin that accepts anything (i.e., \texttt{AnyBin}), can\\ also
+act as a specialized bin (e.g., \texttt{PaperBin}).
+
+\item A specialized bin however (e.g., \texttt{PaperBin}), cannot\\
+act as a bin for anything (i.e., \texttt{AnyBin}).
+
+\end{itemize}
+
+Hence, \texttt{AnyBin} conforms to \texttt{PaperBin}, but not vice-versa.
+
+\end{frame}
+
+\begin{frame}[fragile]
+
+\frametitle{Type Conformity: Example (3/3)}
+
+Combining the two examples however, yields non-conforming bins:
+
+\begin{center}
+\begin{minipage}{0.4\textwidth}
+\begin{lstlisting}
+typeobject AnyBin
+  op Pick -> [Any]
+  op Throw[Any]
+end AnyBin
+\end{lstlisting}
+\end{minipage}\quad%
+\begin{minipage}{0.4\textwidth}
+\begin{lstlisting}
+typeobject PaperBin
+  op Pick -> [Paper]
+  op Throw[Paper]
+end PaperBin
+\end{lstlisting}
+\end{minipage}
+\end{center}
+
+This makes sense:
+
+\begin{itemize}
+
+\item You cannot throw anything into a \texttt{PaperBin},\\ so it
+cannot act as an \texttt{AnyBin}.
+
+\item You can throw anything into an \texttt{AnyBin}, so it cannot act
+as a \texttt{PaperBin}, from which you only ever want to pick
+\texttt{Paper}.
+
+\end{itemize}
+
+Hence, neither \texttt{AnyBin} conforms to \texttt{PaperBin}, nor
+vice-versa.
+
+\end{frame}

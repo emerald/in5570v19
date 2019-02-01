@@ -1,0 +1,99 @@
+\begin{frame}
+
+\frametitle{Type Objects}
+
+\begin{itemize}
+
+\item Special objects of the built-in type \lstinline{Signature}
+
+\item Constructed using the \lstinline{typeobject} keyword
+
+\item Every Emerald object has an associated type object
+
+\item Use the \lstinline{typeof} operator to fetch the type of an object
+
+\item Use the \lstinline{getSignature} method to fetch the type of a class
+
+\item Compare type objects with the \lstinline{*>} (conforms to)
+operator
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+
+\frametitle{Type Objects: Examples (1/3)}
+
+\begin{lstlisting}
+const RandType <- typeobject RandType
+  op next -> [seed : Integer]
+end RandType
+
+const RandObject <- object RandObject
+  export op next -> [retval : Integer]
+    retval <- 0
+  end next
+end RandObject
+
+const main <- object main
+  initially
+    const r : Boolean <- (typeof RandObject) *> RandType
+    stdout.putstring[r.asstring || "\n"]
+  end initially
+end main
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]
+
+\frametitle{Type Objects: Examples (2/3)}
+
+\begin{lstlisting}
+const RandType <- typeobject RandType
+  op next -> [seed : Integer]
+end RandType
+
+const RandClass <- class RandClass
+  export op next -> [retval : Integer]
+    retval <- 0
+  end next
+end RandClass
+
+const main <- object main
+  initially
+    const r : Boolean <- RandClass.getSignature *> RandType
+    stdout.putstring[r.asstring || "\n"]
+  end initially
+end main
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]
+
+\frametitle{Type Objects: Examples (3/3)}
+
+\begin{lstlisting}
+const RandClass <- class RandClass
+  export op next -> [retval : Integer]
+    retval <- 0
+  end next
+end RandClass
+
+const RandObject <- object RandObject
+  export op next -> [retval : Integer]
+    retval <- 0
+  end next
+end RandObject
+
+const main <- object main
+  initially
+    const r <- (typeof RandObject) *> RandClass.getSignature
+    stdout.putstring[r.asstring || "\n"]
+  end initially
+end main
+\end{lstlisting}
+
+\end{frame}

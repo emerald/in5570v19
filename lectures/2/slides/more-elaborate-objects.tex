@@ -1,0 +1,93 @@
+\begin{frame}[fragile]
+
+\frametitle{A More Elaborate Object (1/3)}
+
+\begin{lstlisting}
+% A random number generator
+% Derived from https://stackoverflow.com/a/3062783/5801152
+const rand <- object rand
+  var seed : Integer <- 123456789
+  const a <- 1103515245
+  const c <- 12345
+  const m <- 2147483648
+  op next -> [retval : Integer]
+    seed <- (a * seed + c) # m
+    retval <- seed
+  end next
+  initially
+    stdout.putstring[rand.next.asstring || "\n"]
+    stdout.putstring[rand.next.asstring || "\n"]
+    stdout.putstring[rand.next.asstring || "\n"]
+  end initially
+end rand
+\end{lstlisting}
+
+\begin{itemize}
+
+\item Many built-in types define an \texttt{asstring} method
+
+\item Append a line break (\lstinline{|| "\n"}) to flush stdout
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+
+\frametitle{A More Elaborate Object (2/3)}
+
+If we \textbf{export} the operation, we can use it outside:
+
+\begin{lstlisting}
+const rand <- object rand
+  var seed : Integer <- 123456789
+  const a <- 1103515245
+  const c <- 12345
+  const m <- 2147483648
+  export op next -> [retval : Integer]       % See here
+    seed <- (a * seed + c) # m
+    retval <- seed
+  end next
+end rand                                    % Here
+                                            %
+const main <- object main                   %
+  initially
+    stdout.putstring[rand.next.asstring || "\n"]
+    stdout.putstring[rand.next.asstring || "\n"]
+    stdout.putstring[rand.next.asstring || "\n"]
+  end initially
+end main                                    % And here
+\end{lstlisting}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+
+\frametitle{A More Elaborate Object (3/3)}
+
+Now, with a bit more \textbf{class}:
+
+\begin{lstlisting}
+const rand <- class rand                  % See here
+  var seed : Integer <- 123456789
+  const a <- 1103515245
+  const c <- 12345
+  const m <- 2147483648
+  export op next -> [retval : Integer]
+    seed <- (a * seed + c) # m
+    retval <- seed
+  end next
+end rand
+
+const main <- object main
+  initially
+    const r <- rand.create                % And here
+    stdout.putstring[r.next.asstring || "\n"]
+    stdout.putstring[r.next.asstring || "\n"]
+    stdout.putstring[r.next.asstring || "\n"]
+  end initially
+end main
+\end{lstlisting}
+
+\end{frame}

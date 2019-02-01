@@ -1,0 +1,94 @@
+\begin{frame}[fragile]
+
+\frametitle{Some Hello-World Objects (1/3)}
+
+Time for some output!
+
+\begin{lstlisting}
+const main <- object main
+  initially
+    stdout.putstring["Hello, World!\n"]
+  end initially
+end main
+\end{lstlisting}
+
+To compile and run:
+
+\begin{lstlisting}
+$ ec hello.m    # Assuming you call the above file hello.m
+$ emx hello.x   # Assuming ec went well, you'll get a hello.x
+\end{lstlisting}
+
+\begin{itemize}
+
+\item The use of the name(s) ``\texttt{main}'' is purely conventional
+
+\item Emerald merely evaluates the declarations of a program\\ (and
+their expressions) in order, from top to bottom
+
+\item An \texttt{initially}-block can contain a list of declarations
+and statements, and end in fault-handling code; more on fault-handling
+in subsequent lectures
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+
+\frametitle{Some Hello-World Objects (2/3)}
+
+The following is also a valid Emerald program:
+
+\begin{lstlisting}
+const alice <- object female
+  initially
+    stdout.putstring["Hello, I am Alice!\n"]
+  end initially
+end female
+
+const bob <- object male
+  initially
+    stdout.putstring["Hello, I am Bob!\n"]
+  end initially
+end male
+\end{lstlisting}
+
+Compile and run:
+
+\begin{lstlisting}
+$ ec hello.m
+$ emx hello.x
+Hello, I am Alice!
+Hello, I am Bob!
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]
+
+\frametitle{Some Hello-World Objects (3/3)}
+
+So is this:
+
+\begin{lstlisting}
+const main <- object main
+  initially
+    stdout.putstring["Hello, World!\n"]
+    stdout.putstring["Hello?\n"]
+    stdout.putstring["Is there anyone out there?\n"]
+  end initially
+end main
+\end{lstlisting}
+
+Compile and run:
+
+\begin{lstlisting}
+$ ec hello.m
+$ emx hello.x
+Hello, World!
+Hello?
+Is there anyone out there?
+\end{lstlisting}
+
+\end{frame}

@@ -1,0 +1,68 @@
+\begin{frame}[fragile]
+
+\frametitle{What Is A Class (in Emerald) Anyway?}
+
+\begin{center}
+
+A class declares (1) an object type, and \\ (2) a means to create
+instances of that type
+
+\end{center}
+
+\vspace{\fill}
+
+Consequently, an Emerald class \texttt{C} is
+\textbf{\underline{syntactic sugar}}\\ for an Emerald object exporting
+the following methods:
+
+\begin{lstlisting}
+getSignature -> Signature
+create [p1, p2, ...] -> C
+\end{lstlisting}
+
+where
+
+\begin{itemize}
+
+\item \lstinline{Signature} is a built-in type of all type objects
+
+\item The value (object) returned by \texttt{create} will ``conform
+to''\\ the signature returned by \texttt{getSignature}
+
+\end{itemize}
+
+More on type objects and conformity after an example
+
+\end{frame}
+
+\begin{frame}[fragile]
+
+\frametitle{A More Elaborate (Class) Object}
+
+The class from before, without syntactic sugar:
+
+\begin{lstlisting}
+const rand <- object RandCreator
+  const RandType <- typeobject RandType
+    op next -> [seed : Integer]
+  end RandType
+  export function getSignature -> [r : Signature]
+    r <- RandType
+  end getSignature
+  export op create -> [r : RandType]
+    r <- object Rand
+      var seed : Integer <- 123456789
+      const a <- 1103515245
+      const c <- 12345
+      const m <- 2147483648
+      export operation next[] -> [r : Integer]
+        seed <- (a * seed + c) # m
+        r <- seed
+      end next
+    end Rand
+  end create
+end RandCreator
+\end{lstlisting}
+
+\end{frame}
+
