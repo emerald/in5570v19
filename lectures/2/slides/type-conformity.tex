@@ -15,23 +15,7 @@ type must \textbf{\underline{conform to}} the expected type
 
 \end{itemize}
 
-\begin{lstlisting}
-const RandType <- typeobject RandType
-  op next -> [seed : Integer]
-end RandType
-
-const RandClass <- class RandClass
-  export op next -> [retval : Integer]
-    retval <- 42
-  end next
-end rand
-
-const main <- object main
-  initially
-    const r : RandType <- RandClass.create
-  end initially
-end main
-\end{lstlisting}
+\lstinputlisting{../src/12-instance-conforms-to-type.m}
 
 \end{frame}
 

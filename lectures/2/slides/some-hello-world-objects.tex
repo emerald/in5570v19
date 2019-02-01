@@ -4,13 +4,7 @@
 
 Time for some output!
 
-\begin{lstlisting}
-const main <- object main
-  initially
-    stdout.putstring["Hello, World!\n"]
-  end initially
-end main
-\end{lstlisting}
+\lstinputlisting{../src/02-hello-world.m}
 
 To compile and run:
 
@@ -40,19 +34,7 @@ in subsequent lectures
 
 The following is also a valid Emerald program:
 
-\begin{lstlisting}
-const alice <- object female
-  initially
-    stdout.putstring["Hello, I am Alice!\n"]
-  end initially
-end female
-
-const bob <- object male
-  initially
-    stdout.putstring["Hello, I am Bob!\n"]
-  end initially
-end male
-\end{lstlisting}
+\lstinputlisting{../src/03-alice-bob-say-hello.m}
 
 Compile and run:
 
@@ -71,15 +53,7 @@ Hello, I am Bob!
 
 So is this:
 
-\begin{lstlisting}
-const main <- object main
-  initially
-    stdout.putstring["Hello, World!\n"]
-    stdout.putstring["Hello?\n"]
-    stdout.putstring["Is there anyone out there?\n"]
-  end initially
-end main
-\end{lstlisting}
+\lstinputlisting{../src/04-lonely-planet.m}
 
 Compile and run:
 
