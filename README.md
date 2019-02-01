@@ -1,4 +1,4 @@
-# Tools and Teaching Material Source Code for IN[59]570
+# Tools and Source Code for IN[59]570, Spring 2019
 
 This repository contains some of the tools and source code for
 material used in the MSc-level course
