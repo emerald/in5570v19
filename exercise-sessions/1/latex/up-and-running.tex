@@ -1,0 +1,111 @@
+\begin{frame}[fragile]
+
+\frametitle{Get An Emerald Node Up and Running}
+
+\begin{itemize}
+
+\footnotesize
+
+\item The Docker image prepared for this course is on Docker
+Hub:\\[0.5em] \url{https://hub.docker.com/r/portoleks/in5570v19/}
+
+\item Once you have Docker installed, you can run it as follows:
+
+\begin{lstlisting}[language=bash]
+$ docker run -it --rm portoleks/in5570v19:latest
+\end{lstlisting}
+
+\item This lands you in a BASH shell, having the following binaries:
+
+\begin{itemize}
+
+\footnotesize
+
+\item \texttt{ec} (Emerald compiler)
+
+\item \texttt{emx} (Emerald virual machine / execution engine)
+
+\end{itemize}
+
+\item \textbf{NB!} The file-system is ephemeral; once you exit (type
+\texttt{exit}, or press Ctrl+D), the files you create here are lost!
+
+\item To run with \textbf{\underline{your working
+directory}}\footnote{Make sure you are in a project directory before
+you run this command} mounted, do this instead:
+
+\begin{lstlisting}[language=bash]
+$ docker run -it --rm \
+    --volume "$(pwd):/home/docker/src/" \
+    --workdir "/home/docker/src/" \
+    portoleks/in5570v19:latest
+\end{lstlisting}
+
+\textbf{NB!} In Windows PowerShell, use \texttt{\lq} (backtick)
+instead of \texttt{\textbackslash} (backslash).
+
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+
+\frametitle{Print \texttt{Hello, World!}}
+
+Here is a program with some observable behaviour:
+
+\inputsrc{00-hello-world.m}
+
+To compile and run:
+
+\begin{lstlisting}[language=bash]
+$ ec hello.m    # Assuming you call the above file hello.m
+$ emx hello.x   # Assuming ec went well, you'll get a hello.x
+\end{lstlisting}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+
+\frametitle{Print \texttt{Hello, World!} Everywhere (1/2)}
+
+This code asks every node to print \texttt{Hello, World!}\\ in each
+their own standard output stream:
+
+\inputsrc{01-hello-all.m}
+
+\end{frame}
+
+\begin{frame}[fragile]
+
+\frametitle{Print \texttt{Hello, World!} Everywhere (2/2)}
+
+To compile and run (on 3 nodes):
+
+\begin{lstlisting}[language=bash]
+$ ip addr                   # Determine the IP address of master
+...
+... eth0...
+  inet 172.17.0.2...        # Here it is, under eth0, inet
+$ emx -R                    # Start an Emerald master node
+Emerald listening on port 17099...
+\end{lstlisting}
+
+\begin{lstlisting}[language=bash]
+# Start another node
+$ emx -R172.17.0.2:17099    # The port is (often) optional
+\end{lstlisting}
+
+\begin{lstlisting}[language=bash]
+# Start another node, and run helloall.x
+$ ec helloall.m             
+$ emx -R172.17.0.2:17099 helloall.x
+\end{lstlisting}
+
+\textbf{NB!} Don't use a space between \texttt{-R} and the node
+identifier\\ (e.g., write \texttt{-Rlocalhost},
+\textbf{\underline{not}} \texttt{-R localhost}).
+
+\end{frame}

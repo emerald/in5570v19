@@ -1,0 +1,154 @@
+\setbeamerfont{title}{size=\LARGE}
+
+% Logo
+%\addtobeamertemplate{title page}{%
+%  \begin{textblock}{20}(11.5,-0.5)%
+%    \includegraphics[height=1in]{figures/white-logo}%
+%  \end{textblock}%
+%}
+
+\usepackage[T1]{fontenc}
+%\usepackage[sfdefault]{AlegreyaSans} %% Option 'black' gives heavier bold face
+%% The 'sfdefault' option to make the base font sans serif
+%\renewcommand*\oldstylenums[1]{{\AlegreyaSansOsF #1}}
+
+\usepackage[scaled=0.85]{beramono}
+\setbeamertemplate{navigation symbols}{} % strip navigation symbols
+%\usefonttheme{serif} % use the sans-serif fonts (Palatino)
+\setbeamerfont{title}{series=\bfseries,parent=structure}
+\setbeamerfont{frametitle}{series=\bfseries,parent=structure}
+
+\usepackage{textpos}
+%\usepackage{paralist}
+%\usepackage{enumitem}
+\usepackage{expdlist}
+\usepackage{subfigure}
+\usepackage{amssymb, amsmath, amsthm}
+\everymath{\displaystyle}
+
+\usepackage[T1]{fontenc}
+\usepackage{mathpazo}
+
+\definecolor{mgcolor}{RGB}{230,230,230}
+\definecolor{bgcolor}{RGB}{255,255,255}
+\definecolor{fgcolor}{RGB}{0,0,0}
+
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\mono}[1]{\texttt{#1}}
+\newcommand{\textt}[1]{\ensuremath{\text{\mono{#1}}}}
+\newcommand{\mathmono}[1]{\ensuremath{\text{\mono{#1}}}}
+\newcommand{\nonterm}[1]{\ensuremath{\text{\mono{<#1>}}}}
+\newcommand{\term}[1]{\ensuremath{\text{\mono{`#1'}}}}
+\newcommand{\any}[0]{\ensuremath{\left\langle\bigtriangleup\right\rangle}}
+\newcommand{\D}{$\Delta$}
+
+\newcommand{\makeTable}[6][htbp!]
+{
+	\begin{table}[#1]
+	\centering
+	\begin{tabular}{#4}
+	#5\\
+	#6\\
+	\end{tabular}
+	\end{table}
+}
+
+\newcommand{\includeFigure}[4][htbp!]
+{
+	\begin{figure}[#4]
+	\centering
+	\IfDecimal{#1}
+	{
+		\includegraphics[scale=#1]{figures/#2}
+	}
+	{
+		\includegraphics[#1]{figures/#2}
+	}
+	\caption[]{#3}
+	\label{figure:#2}
+	\end{figure}
+}
+
+\usepackage{clrscode3e}
+\usepackage{verbatim}
+\usepackage{listings}
+\lstset
+{
+  language=bash,
+	tabsize=2,
+	numbers=none,
+	breaklines=true,
+  backgroundcolor=\color{mgcolor},
+%	foregroundcolor=\color{bgcolor},
+	framexleftmargin=0.05in,
+	basicstyle=\ttfamily\footnotesize,
+	numberstyle=\tiny,
+%  keywordstyle=\color{green},
+%	stringstyle=\color{red},
+%	commentstyle=\color{ForestGreen},
+  mathescape=true,
+  captionpos=b,
+  columns=fullflexible,
+  breakatwhitespace,
+  extendedchars=true,
+%  escapeinside={(*@}{@*)},
+  mathescape=false,
+  keepspaces,
+  emphstyle={\bf},
+  showstringspaces=false
+}
+
+\setbeamercolor{title}{fg=fgcolor}
+\setbeamercolor{frametitle}{fg=fgcolor}
+\setbeamercolor{normal text}{fg=fgcolor}
+\setbeamercolor{background canvas}{bg=bgcolor}
+\setbeamercolor{normal text}{fg=fgcolor}
+\setbeamercolor{itemize item}{fg=fgcolor}
+\setbeamercolor{itemize subitem}{fg=fgcolor}
+\setbeamercolor{description item}{fg=fgcolor}
+\setbeamercolor{enumerate item}{fg=fgcolor}
+\setbeamercolor{block title}{fg=fgcolor}
+
+\setbeamercolor{bibliography item}{fg=fgcolor}
+\setbeamercolor{bibliography entry author}{fg=fgcolor}
+%\setbeamertemplate{bibliography item}[text]
+
+\usepackage{fancyvrb}
+
+\newcommand{\question}[1]%
+{%
+  \begin{center}%
+  \Large \textbf{#1}%
+  \end{center}%
+}
+
+\newcommand{\answer}[1]%
+{%
+  \begin{flushright}%
+  --- #1%
+  \end{flushright}%
+}
+
+\usepackage{xparse}
+
+\NewDocumentCommand\mathWrap{mmm}{\ensuremath{%
+  \mathopen{}\left#1#2\right#3\mathclose{}%
+}}
+
+\NewDocumentCommand\set{m}{%
+  \mathWrap{\{\mathrel{}}{#1\mathrel{}}{\}}%
+}
+
+\NewDocumentCommand\floor{m}{%
+  \mathWrap{\lfloor\mathrel{}}{#1\mathrel{}}{\rfloor}%
+}
+
+\NewDocumentCommand\card{m}{%
+  \mathWrap{|\mathrel{}}{#1\mathrel{}}{|}%
+}
+
+\NewDocumentCommand\p{m}{%
+  \mathWrap{(}{#1}{)}%
+}
+
+\usepackage{bashful}
