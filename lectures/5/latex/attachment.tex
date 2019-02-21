@@ -1,0 +1,81 @@
+\begin{frame}
+
+\frametitle{Emerald Objects are Mobile}
+
+\begin{itemize}
+
+\item Mobility may affect system \textbf{performance}
+
+\begin{itemize}
+
+\item So long as all objects are on one machine, the overhead of a
+method call or field access is negligible and predictable
+
+\end{itemize}
+
+\item Mobility may affect system \textbf{reliability}
+
+\begin{itemize}
+
+\item So long as all objects are on one machine, you only have to
+worry about the life of that one machine
+
+\end{itemize}
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+
+\vspace{\fill}
+
+\begin{center}
+
+\includegraphics[width=0.9\textwidth]{figures/no-mobile-no-cry}
+
+\end{center}
+
+\vspace{\fill}
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Attachment}
+
+\begin{center}
+
+As an object moves around, what about the objects it references?
+
+\end{center}
+
+\vspace{\fill}
+
+\begin{itemize}
+
+\item Making sure that a certain collection of objects is
+\emph{always} co-located enables us to again make claims about the
+\emph{performance} and \emph{reliability} of our code
+
+\item The Emerald runtime \emph{may} move an object at any time.  \\
+Hence, referenced objects \emph{may} move along, but this is
+unreliable --- the Emerald runtime can only do so little
+
+\end{itemize}
+
+\vspace{\fill}
+
+\begin{center}
+
+To this end, emerald has an \lstinline{attached} keyword
+
+\end{center}
+
+\begin{itemize}
+
+\item Attached objects stick together
+
+\end{itemize}
+
+\end{frame}

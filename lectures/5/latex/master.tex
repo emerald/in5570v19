@@ -1,0 +1,32 @@
+\documentclass[xcolor=table]{beamer}
+
+\input{header}
+\input{listings-emerald}
+\lstset{language=emerald}
+
+\title{{\large Lecture 5, Part 1\\ Attachments, Availability, and Failure}}
+\subject{IN59570: Distributed Objects}
+\institute{University of Oslo}
+\author{Oleks Shturmov\\[-0.2em]%
+  {\tiny \texttt{<olekss@uio.no>} / \texttt{<oleks@oleks.info>}}
+}
+\date{February 21, 2019\\[2em]
+{\scriptsize The source code for these slides is maintained here: \\[-0.5em] {\tiny%
+\url{https://github.com/emerald/in5570v19/tree/master/lectures/5}}%
+}}
+
+\newcommand\inputsrc[1]{\lstinputlisting{../emerald/#1}}
+
+\begin{document}
+
+\begin{frame} \titlepage \end{frame}
+
+\input{attachment}
+
+\input{what-can-be-attached}
+
+\input{unavailable-and-failure}
+
+\input{references}
+
+\end{document}
