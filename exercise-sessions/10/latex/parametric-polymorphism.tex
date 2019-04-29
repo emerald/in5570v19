@@ -2,4 +2,109 @@
 
 \frametitle{Parametric Polymorphism (in Emerald)}
 
+\begin{itemize}
+
+\item A language that supports \emph{polymorphism}, enables us to
+write code that will work for a collection of datatypes, rather than
+one particular data type.
+
+\item Emerald supports \emph{inclusion polymorphism}, due to its
+conformance relation: In place of a particular type, Emerald hapily
+accepts a value of a different, but conforming type.
+
+\item Emerald also supports \emph{parametric polymorphism}, where no
+type is actually specified. Instead, a type is passed (implicitly, or
+explicitly) as a parameter, and can variously constrained.
+
+\item See also Section 7.4 on pages 18-19 of \cite{report1991}.
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+
+\frametitle{Passing the Type Parameter \underline{Explicitly}}
+
+\inputsrc{explicit.m}
+
+\begin{itemize}
+
+\item Unfortunately, we cannot inspect \lstinline{t} directly; values
+of type \lstinline{Type}, are rather useless at runtime --- we must
+resort to asking for the type of \lstinline{a} itself
+
+\item As another exmaple, recall how you must explicitly pass a type
+to the \lstinline{Array.of} constructor, to get an \lstinline{Array}
+of that type
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+
+\frametitle{Passing the Type Parameter \underline{Implicitly}}
+
+\inputsrc{implicit.m}
+
+\begin{itemize}
+
+\item The \lstinline{forall} clause introduces an \emph{unconstrained
+type variable}
+
+\item We can then (somewhat backwards) use \lstinline{t} in the
+signature above the \lstinline{forall} clause
+
+\item However, \lstinline{t} now also gets the type
+\lstinline{ConcreteType}, which means that the type variable is
+actually useful at runtime!
+
+\item We must use a \lstinline{forall} clause, as otherwsie
+\lstinline{t} is undefined.
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+
+\frametitle{What if you don't use \lstinline{t}?}
+
+\inputsrc{whocares.m}
+
+\begin{itemize}
+
+\item Who cares what type \lstinline{t} refers to!
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Constraining Type Variables Such That \ldots}
+
+\lstinputlisting[lastline=8]{../emerald/replicate.m}
+
+\begin{itemize}
+
+\item Use a \lstinline{suchthat} clause
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Constructing Dependent Types}
+
+\lstinputlisting[lastline=9]{../emerald/replicate.m}
+
+\begin{itemize}
+
+\item Use a \lstinline{where} clause
+
+\end{itemize}
+
 \end{frame}
