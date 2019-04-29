@@ -1,0 +1,34 @@
+\documentclass[xcolor=table]{beamer}
+
+\input{header}
+\input{listings-emerald}
+\lstset{language=emerald}
+
+\title{{\Large Exercise Session 10}}
+\subtitle{Towards Home Exam 2}
+\institute{{\large University of Oslo}\\[0.2em] IN[59]570: Distributed Objects}
+\author{Oleks Shturmov\\[-0.2em]%
+  {\tiny \texttt{<olekss@uio.no>} / \texttt{<oleks@oleks.info>}}
+}
+\date{April 29, 2019\\[2em]
+{\scriptsize The source code for these slides is maintained here: \\[-0.5em] {\tiny%
+\url{https://github.com/emerald/in5570v19/tree/master/exercise-sessions/10}}%
+}}
+
+\usepackage[normalem]{ulem}%\sout
+\usepackage{multicol}
+\newcommand\inputsrc[1]{\lstinputlisting{../emerald/#1}}
+
+\begin{document}
+
+\begin{frame} \titlepage \end{frame}
+
+\input{agenda}
+
+\input{parametric-polymorphism}
+
+\input{home-exam-2}
+
+\input{emulating-unavailability}
+
+\end{document}
