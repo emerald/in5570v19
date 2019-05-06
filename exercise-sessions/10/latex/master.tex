@@ -17,7 +17,12 @@
 
 \usepackage[normalem]{ulem}%\sout
 \usepackage{multicol}
-\newcommand\inputsrc[1]{\lstinputlisting{../emerald/#1}}
+\newcommand\inputsrc[1]{%
+  \lstinputlisting[title={\footnotesize{Showing the contents of \texttt{#1}}}]{../emerald/#1}%
+}
+\newcommand\inputsrclines[3]{%
+  \lstinputlisting[firstline=#2,lastline=#3,title={\footnotesize{Showing lines #2--#3 of \texttt{#1}}}]{../emerald/#1}%
+}
 
 \begin{document}
 

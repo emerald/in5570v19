@@ -1,42 +1,35 @@
 \begin{frame}
 
-\frametitle{Parametric Polymorphism (in Emerald)}
+\frametitle{Polymorphism in Emerald}
+
+\begin{center}
+
+In a language with \textbf{polymorphism},\\ we can write code that
+works for many datatypes,\\ not just one particular type of data
+
+\end{center}
 
 \begin{itemize}
 
-\item A language that supports \emph{polymorphism}, enables us to
-write code that will work for a collection of datatypes, rather than
-one particular data type.
+\item Emerald supports \textbf{inclusion polymorphism}, due to its
+\emph{conformance relation}: In place of a particular type, Emerald
+hapily accepts a value of a different, but conforming type
 
-\item Emerald supports \emph{inclusion polymorphism}, due to its
-conformance relation: In place of a particular type, Emerald hapily
-accepts a value of a different, but conforming type.
+\begin{itemize}
 
-\item Emerald also supports \emph{parametric polymorphism}, where no
-type is actually specified. Instead, a type is passed (implicitly, or
-explicitly) as a parameter, and can variously constrained.
-
-\item See also Section 7.4 on pages 18-19 of \cite{report1991}.
+\item You know about conformance from previous weeks
 
 \end{itemize}
 
-\end{frame}
-
-\begin{frame}[fragile]
-
-\frametitle{Passing the Type Parameter \underline{Explicitly}}
-
-\inputsrc{explicit.m}
+\item Emerald also supports \textbf{parametric polymorphism}, where
+types depend on the actual parameters (e.g.,\\ the parameters to a
+method call)
 
 \begin{itemize}
 
-\item Unfortunately, we cannot inspect \lstinline{t} directly; values
-of type \lstinline{Type}, are rather useless at runtime --- we must
-resort to asking for the type of \lstinline{a} itself
+\item See also Section 7.4 on pages 18-19 of \cite{report1991}
 
-\item As another exmaple, recall how you must explicitly pass a type
-to the \lstinline{Array.of} constructor, to get an \lstinline{Array}
-of that type
+\end{itemize}
 
 \end{itemize}
 
@@ -48,20 +41,25 @@ of that type
 
 \inputsrc{implicit.m}
 
+\begin{lstlisting}
+$ emx implicit.x
+integertype
+\end{lstlisting}
+
 \begin{itemize}
 
 \item The \lstinline{forall} clause introduces an \emph{unconstrained
 type variable}
 
 \item We can then (somewhat backwards) use \lstinline{t} in the
-signature above the \lstinline{forall} clause
-
-\item However, \lstinline{t} now also gets the type
-\lstinline{ConcreteType}, which means that the type variable is
-actually useful at runtime!
+signature preceeding the \lstinline{forall} clause
+(\lstinline{op showType[a : t]})
 
 \item We must use a \lstinline{forall} clause, as otherwsie
-\lstinline{t} is undefined.
+\lstinline{t} is undefined \frownie{}
+
+\item \lstinline{t} gets the type \lstinline{ConcreteType};
+\lstinline{t} can be inspected at runtime
 
 \end{itemize}
 
@@ -69,15 +67,112 @@ actually useful at runtime!
 
 \begin{frame}[fragile]
 
-\frametitle{What if you don't use \lstinline{t}?}
+\frametitle{There Are No Runtime Costs}
 
-\inputsrc{whocares.m}
+\vspace{\fill}
+
+\begin{center}
+All types are determined at compile-time!
+\end{center}
+
+\vspace{\fill}
 
 \begin{itemize}
 
-\item Who cares what type \lstinline{t} refers to!
+\item Watch out for ``type must be manifest'' errors from the Emerald
+compiler; if you get these, it means that the type of some expression
+cannot be determined at compile-time
 
 \end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+
+\frametitle{Passing the Type Parameter \underline{Explicitly}}
+
+\inputsrc{explicit.m}
+
+\begin{lstlisting}
+$ emx explicit.x
+integertype
+\end{lstlisting}
+
+\begin{itemize}
+
+\item Recall that, in Emerald, types are also objects
+
+\item As another example, recall how you must explicitly pass a type
+to the \lstinline{Array.of} constructor, to get an \lstinline{Array}
+of that type
+
+\item Unfortunately, we can't do much with \lstinline{t} directly (see
+line 3)
+
+\item Values of type \lstinline{Type} are assumed to only be available
+at runtime
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+
+\frametitle{A Brief Interlude: \lstinline{typeof} vs. \lstinline{syntactictypeof}}
+
+Quite unlike many popular languages, Emerald provides two ways to ask
+for the type of an expression --- \lstinline{typeof} and
+\lstinline{syntactictypeof}:
+
+\begin{itemize}
+
+\item \lstinline{typeof} gives the actual type at \emph{runtime}
+
+\item \lstinline{syntactictypeof} gives the type determined at \emph{compile time}
+
+\end{itemize}
+
+\begin{center}
+
+The Emerald system guarantees that the runtime type of an expression
+will conform to its compile-time type.
+
+\end{center}
+
+\end{frame}
+
+\begin{frame}[fragile]
+
+\frametitle{\lstinline{typeof} vs. \lstinline{syntactictypeof} Illustrated}
+
+\vspace{\fill}
+
+What happens if we ask for \lstinline{typeof t} instead of
+\lstinline{typeof a} above?
+
+\begin{lstlisting}[language=bash]
+$ diff explicit.m typeof.m
+3c3
+<     stdout.putstring[(typeof a)$name || "\n"]
+---
+>     stdout.putstring[(typeof t)$name || "\n"]
+$ emx typeof.x
+pat
+\end{lstlisting}
+
+\vspace{\fill}
+
+What about \lstinline{syntactictypeof t}?
+
+\begin{lstlisting}[language=bash]
+$ diff explicit.m syntactictypeof.m
+3c3
+<     stdout.putstring[(typeof a)$name || "\n"]
+---
+>     stdout.putstring[(syntactictypeof t)$name || "\n"]
+$ emx syntactictypeof.x
+typetype
+\end{lstlisting}
 
 \end{frame}
 
@@ -85,11 +180,14 @@ actually useful at runtime!
 
 \frametitle{Constraining Type Variables Such That \ldots}
 
-\lstinputlisting[lastline=8]{../emerald/replicate.m}
+\inputsrclines{replicate.m}{1}{8}
 
 \begin{itemize}
 
 \item Use a \lstinline{suchthat} clause
+
+\item \lstinline{*>} means \emph{conforms to}, and the expression on
+the right-hand side can be any type-valued expression
 
 \end{itemize}
 
@@ -97,9 +195,35 @@ actually useful at runtime!
 
 \begin{frame}
 
+\frametitle{Building Values with Types Such That \ldots}
+
+\inputsrclines{replicate.m}{10}{21}
+
+\begin{itemize}
+
+\item \lstinline{t} has to be available at compile-time
+
+\item Unfortunately, the only way to do so is with a \lstinline{forall} clause
+
+\item Parametric polymorphism can be quite verbose in Emerald \frownie{}
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Relicating Integers and Strings}
+
+\inputsrclines{replicate.m}{23}{40}
+
+\end{frame}
+
+\begin{frame}
+
 \frametitle{Constructing Dependent Types}
 
-\lstinputlisting[lastline=9]{../emerald/replicate.m}
+\lstinputlisting[lastline=9]{../emerald/replicas.m}
 
 \begin{itemize}
 
