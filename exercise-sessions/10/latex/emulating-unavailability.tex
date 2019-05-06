@@ -2,4 +2,134 @@
 
 \frametitle{Emulating Unavailability (using Docker)}
 
+\begin{itemize}
+
+\item Docker containers connect to the web via a network ``bridge''
+
+\item You can connect and disconnect containers from such a bridge
+
+\item If a container is not connected to a network bridge,\\ for all
+intents and purposes, it is offline
+
+\item This way, we can simulate temporary node unavailability
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+
+\frametitle{Creating A (New) Network Bridge}
+
+\begin{center}
+
+Although a Docker container is by default connected to a default
+network bridge, you can exert grander control\\ by creating your own
+network bridge
+
+\end{center}
+
+\begin{itemize}
+
+\item To create a network bridge:
+
+\begin{lstlisting}[language=bash]
+$ docker network create \
+    --subnet=172.18.0.0/24 \
+    --ip-range=172.18.0.0/24 \
+    --driver=bridge \
+    unavail
+\end{lstlisting}
+
+\item The subnet and IP range arguments effectively make the following
+IP address available for containers to use:
+
+\begin{itemize}
+\footnotesize
+
+\item 172.18.0.2
+
+\item 172.18.0.3
+
+\item \ldots
+
+\item 172.18.0.254
+
+\end{itemize}
+
+\item This bridge is named \texttt{unavail} (see last argument)
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+
+\frametitle{Connecting Running Containers to the Bridge}
+
+\begin{itemize}
+
+\item Start a Docker container
+
+\begin{itemize}
+
+\item Let it have the container ID \texttt{85a87446465}
+
+\end{itemize}
+
+\item To connect \texttt{85a87446465} to \texttt{unavail} at address
+172.18.0.2:
+
+\begin{lstlisting}[language=bash]
+$ docker network connect --ip=172.18.0.2 unavail 85a87446465
+\end{lstlisting}
+
+\item To disconnect \texttt{85a87446465} from \texttt{unavail}:
+
+\begin{lstlisting}[language=bash]
+$ docker network disconnect unavail 85a87446465
+\end{lstlisting}
+
+\end{itemize}
+
+\begin{center}
+
+In a similar vein, you can connect up a range of containers,\\ and
+methodically take them offline one-by-one.
+
+\end{center}
+
+\begin{itemize}
+
+\item See attached \texttt{monitor.m} for a sample program that
+monitors the list of available nodes
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+
+\frametitle{More Network Operations}
+
+As you experiment with Docker and bridge networks,\\ you might find
+the following useful:
+
+\begin{itemize}
+
+\item To inspect the state \texttt{unavail}\\ (e.g., see list of
+connected containers):
+
+\begin{lstlisting}[language=bash]
+$ docker network inspect unavail
+\end{lstlisting}
+
+\item To remove \texttt{unavail}
+
+\begin{lstlisting}[language=bash]
+$ docker network rm unavail
+\end{lstlisting}
+
+\end{itemize}
+
 \end{frame}

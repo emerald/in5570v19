@@ -223,11 +223,18 @@ the right-hand side can be any type-valued expression
 
 \frametitle{Constructing Dependent Types}
 
-\lstinputlisting[lastline=9]{../emerald/replicas.m}
+\inputsrc{replicas.m}
 
 \begin{itemize}
 
 \item Use a \lstinline{where} clause
+
+\item The type \lstinline{rt} \emph{depends on} the given type
+\lstinline{t}
+
+\item Constructing a value of this particular type however, is even
+more tricky than for \texttt{RType}; that is, without resorting to
+type assertions (\lstinline{view ... as ...})
 
 \end{itemize}
 
